@@ -1,0 +1,160 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+    transition: background-color 0.4s ease;
+}
+
+:root {
+    --cell-size: calc(8vw + 8vh);
+    --mark-size: calc(var(--cell-size) * 0.8);
+    --hover-color: #d3d3d3;
+    --active-color: #a1a1a1;
+}
+
+body {
+    margin: 0;
+    background-image: linear-gradient(790deg, #CAA8F5, #9984D4, #592E83);
+}
+
+.board {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 3px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+    border-bottom: none;
+}
+
+.cell:nth-child(3n + 1) {
+    border-left: none;
+}
+
+.cell:nth-child(3n + 3) {
+    border-right: none;
+}
+
+.cell.x,
+.cell.o {
+    cursor: not-allowed;
+}
+
+.cell.x::before,
+.cell.x::after,
+.cell.o::before {
+    background-color: #230C33;
+}
+
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after,
+.board.o .cell:not(.x):not(.o):hover::before {
+    background-color: var(--hover-color);
+}
+
+.board.x .cell:not(.x):not(.o):active::before,
+.board.x .cell:not(.x):not(.o):active::after,
+.board.o .cell:not(.x):not(.o):active::before {
+    background-color: var(--active-color);
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after {
+    content: "";
+    position: absolute;
+    width: calc(var(--mark-size) * 0.2);
+    height: var(--mark-size);
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.o):hover::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.o):hover::after {
+    transform: rotate(-45deg);
+}
+
+.cell.o::before,
+.cell.o::after,
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.o::before,
+.board.o .cell:not(.x):not(.o):hover::before {
+    width: var(--mark-size);
+    height: var(--mark-size);
+}
+
+.cell.o::after,
+.board.o .cell:not(.x):not(.o):hover::after {
+    width: calc(var(--mark-size) * 0.7);
+    height: calc(var(--mark-size) * 0.7);
+    background-color: #9984D4;
+}
+
+.end-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #230C33;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 6rem;
+    flex-direction: column;
+}
+
+.end-message button {
+    font-size: 3rem;
+    padding: 0.25em 0.5em;
+    margin-top: 0.25em;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.end-message button:hover {
+    background-color: var(--hover-color);
+}
+
+.end-message button:active {
+    background-color: var(--active-color);
+}
+
+.end-message.show {
+    display: flex;
+}
